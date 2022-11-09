@@ -57,11 +57,20 @@ public class ProgrammaEventi
     }
     public override string ToString()
     {
-        string stampa = Titolo;
+        string stampa = Titolo + "\n";
         foreach (Evento evento in eventi)
         {
             stampa = stampa + "\t" + evento.ToString() + "\n";
         }
         return stampa;
+    }
+    public Evento CercaEvento(string titolo, DateOnly data)
+    {
+        foreach (Evento evento in eventi)
+        {
+            if (evento.Data == data && evento.Titolo == titolo)
+                return evento;
+        }
+        return null;
     }
 }

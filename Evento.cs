@@ -11,7 +11,7 @@ public class Evento
         set
         {
             if (value == null || value == "")
-                throw new GestoreEventiException("Il nome passato è vuoto");
+                throw new GestoreEventiException("Il nome dell'evento non può essere vuoto");
             _titolo = value;
         }
     }
