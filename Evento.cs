@@ -57,6 +57,8 @@ public class Evento
     }
     public void DisdiciPosti(int numero)
     {
+        if (Data < DateOnly.FromDateTime(DateTime.Now))
+            throw new GestoreEventiException("Non puoi disdire prenotazioni di un evento già passato");
         if (PostiPrenotati - numero < 0)
             throw new GestoreEventiException("Non ci sono abbastanza prenotazioni da disdire");
         PostiPrenotati -= numero;
