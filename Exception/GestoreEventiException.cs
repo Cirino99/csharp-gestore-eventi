@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// See https://aka.ms/new-console-template for more information
 
-namespace csharp_gestore_eventi.Exception
+public class GestoreEventiException : Exception
 {
-    public class GestoreEventiException : Exception
+    public GestoreEventiException()
     {
-        public GestoreEventiException()
-        {
+    }
 
-        }
-        public GestoreEventiException(string? message ) : base(message)
-        {
-
-        }
+    public GestoreEventiException(string? message) : base(message)
+    {
     }
 }
