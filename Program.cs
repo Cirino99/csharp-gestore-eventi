@@ -2,8 +2,7 @@
 
 Console.WriteLine("Inserisci il nome del tuo programma di eventi:");
 string nomeProgramma = Console.ReadLine();
-Console.WriteLine("inserisci il numero di eventi da inserire:");
-int numeroEventi = Convert.ToInt32(Console.ReadLine());
+int numeroEventi = NumeroUtente("inserisci il numero di eventi da inserire:");
 ProgrammaEventi programma = new ProgrammaEventi(nomeProgramma);
 for(int i=1; i<=numeroEventi; i++)
 {
@@ -33,9 +32,7 @@ do
         case "3":
             try
             {
-                Console.WriteLine("Inserisci una data con cui cercare gli eventi (gg/mm/yyyy)");
-                string dataStringa = Console.ReadLine();
-                DateOnly data = DateOnly.Parse(dataStringa);
+                DateOnly data = DataUtente("Inserisci una data con cui cercare gli eventi (gg/mm/yyyy)");
                 List<Evento> eventi = programma.CercaEventi(data);
                 Console.WriteLine(ProgrammaEventi.StampaListaEventi(eventi));
             }
@@ -47,18 +44,14 @@ do
         case "4":
             Console.WriteLine("Inserisci il nome dell'evento");
             string nomeEvento = Console.ReadLine();
-            Console.WriteLine("Inserisci la data dell'evento (gg/mm/yyyy)");
-            string dataStringa2 = Console.ReadLine();
-            DateOnly data2 = DateOnly.Parse(dataStringa2);
+            DateOnly data2 = DataUtente("Inserisci la data dell'evento (gg/mm/yyyy)");
             Evento evento = programma.CercaEvento(nomeEvento, data2);
             AggiungiPrenotazione(evento);
             break;
         case "5":
             Console.WriteLine("Inserisci il nome dell'evento");
             string nomeEvento2 = Console.ReadLine();
-            Console.WriteLine("Inserisci la data dell'evento (gg/mm/yyyy)");
-            string dataStringa3 = Console.ReadLine();
-            DateOnly data3 = DateOnly.Parse(dataStringa3);
+            DateOnly data3 = DataUtente("Inserisci la data dell'evento (gg/mm/yyyy)");
             Evento evento2 = programma.CercaEvento(nomeEvento2, data3);
             EliminaPrenotazione(evento2);
             break;
@@ -69,18 +62,14 @@ do
     }
 } while (esci);
 
-
 void CreaEvento(int numero)
 {
     bool successo = false;
     do {
         Console.WriteLine("Inserisci il nome del " + numero + "° evento:");
         string nome = Console.ReadLine();
-        Console.WriteLine("Inserisci la data dell'evento (gg/mm/yyyy)");
-        string dataStringa = Console.ReadLine();
-        DateOnly data = DateOnly.Parse(dataStringa);
-        Console.WriteLine("Inserisci il numero di posti totali:");
-        int capienza = Convert.ToInt32(Console.ReadLine());
+        DateOnly data = DataUtente("Inserisci la data dell'evento (gg/mm/yyyy)");
+        int capienza = NumeroUtente("Inserisci il numero di posti totali:");
         try
         {
             Evento evento = new Evento(nome, data, capienza);
@@ -99,11 +88,14 @@ void AggiungiPrenotazione(Evento evento)
     try
     {
         Console.WriteLine("Numero di posti disponibili = " + (evento.CapienzaMassima - evento.PostiPrenotati));
-        Console.WriteLine("Quanti posti vuoi prenotare?");
-        int prenotazioni = Convert.ToInt32(Console.ReadLine());
+        int prenotazioni = NumeroUtente("Quanti posti vuoi prenotare?");
         evento.PrenotaPosti(prenotazioni);
     }
     catch (GestoreEventiException e)
+    {
+        Console.WriteLine(e.Message);
+    }
+    catch(NullReferenceException e)
     {
         Console.WriteLine(e.Message);
     }
@@ -114,12 +106,68 @@ void EliminaPrenotazione(Evento evento)
     try
     {
         Console.WriteLine("numero di posti prenotati = " + evento.PostiPrenotati);
-        Console.WriteLine("Quanti posti vuoi disdire?");
-        int cancellazioni = Convert.ToInt32(Console.ReadLine());
+        int cancellazioni = NumeroUtente("Quanti posti vuoi disdire?");
         evento.DisdiciPosti(cancellazioni);
     }
     catch (GestoreEventiException e)
     {
         Console.WriteLine(e.Message);
     }
+}
+
+DateOnly DataUtente(string message)
+{
+    bool succes = false;
+    DateOnly data;
+    do
+    {
+        try
+        {
+            Console.WriteLine(message);
+            string dataStringa = Console.ReadLine();
+            data = DateOnly.Parse(dataStringa);
+            succes = true;
+        }
+        catch (ArgumentNullException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        catch (FormatException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    } while (!succes);
+    return data;
+}
+
+int NumeroUtente(string message)
+{
+    bool succes = false;
+    int numero = 0;
+    do
+    {
+        try
+        {
+            Console.WriteLine(message);
+            numero = Convert.ToInt32(Console.ReadLine());
+            succes = true;
+        }
+        catch (FormatException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        catch (OverflowException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    } while (!succes);
+    return numero;
 }

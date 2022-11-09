@@ -38,12 +38,15 @@ public class ProgrammaEventi
     }
     public static string StampaListaEventi(List<Evento> eventi)
     {
+        if(eventi == null)
+            throw new GestoreEventiException("Non sono stati trovati eventi");
         string stampa = "";
         foreach (Evento evento in eventi)
         {
             if(stampa == "")
                 stampa = evento.ToString() + "\n";
-            stampa = stampa + evento.ToString() + "\n";
+            else
+                stampa = stampa + evento.ToString() + "\n";
         }
         return stampa;
     }
