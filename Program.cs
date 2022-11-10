@@ -7,7 +7,11 @@ ProgrammaEventi programma = new ProgrammaEventi(nomeProgramma);
 for(int i=1; i<=numeroEventi; i++)
 {
     Console.WriteLine();
-    CreaEvento(i);
+    string tipo = SceltaEventoConferenza();
+    if (tipo == "evento")
+        CreaEvento(i);
+    else
+        CreaConferenza(i);
 }
 bool esci = true;
 do
@@ -83,6 +87,31 @@ void CreaEvento(int numero)
     } while(!successo);
 }
 
+void CreaConferenza(int numero)
+{
+    bool successo = false;
+    do
+    {
+        Console.WriteLine("Inserisci il nome della " + numero + "° conferenza:");
+        string nome = Console.ReadLine();
+        DateOnly data = DataUtente("Inserisci la data dell'evento (gg/mm/yyyy)");
+        int capienza = NumeroUtente("Inserisci il numero di posti totali:");
+        Console.WriteLine("Inserisci il nome del relatore:");
+        string relatore = Console.ReadLine();
+        double prezzo = DoubleUtente("Inserisci il prezzo del biglietto:");
+        try
+        {
+            Conferenza conferenza = new Conferenza(nome, data, capienza,relatore,prezzo);
+            programma.AggiungiEvento(conferenza);
+            successo = true;
+        }
+        catch (GestoreEventiException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    } while (!successo);
+}
+
 void AggiungiPrenotazione(Evento evento)
 {
     try
@@ -95,7 +124,7 @@ void AggiungiPrenotazione(Evento evento)
     {
         Console.WriteLine(e.Message);
     }
-    catch(NullReferenceException e)
+    catch (NullReferenceException e)
     {
         Console.WriteLine(e.Message);
     }
@@ -170,4 +199,39 @@ int NumeroUtente(string message)
         }
     } while (!succes);
     return numero;
+}
+
+double DoubleUtente(string message)
+{
+    bool succes = false;
+    double numero = 0;
+    do
+    {
+        try
+        {
+            Console.WriteLine(message);
+            numero = Convert.ToDouble(Console.ReadLine());
+            succes = true;
+        }
+        catch (FormatException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        catch (OverflowException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    } while (!succes);
+    return numero;
+}
+
+string SceltaEventoConferenza()
+{
+    Console.WriteLine("Vuoi inserire un evento o una conferenza?");
+    string tipo = Console.ReadLine();
+    return tipo;
 }
