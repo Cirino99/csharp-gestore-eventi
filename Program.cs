@@ -2,16 +2,23 @@
 
 Console.WriteLine("Inserisci il nome del tuo programma di eventi:");
 string nomeProgramma = Console.ReadLine();
-int numeroEventi = NumeroUtente("inserisci il numero di eventi da inserire:");
 ProgrammaEventi programma = new ProgrammaEventi(nomeProgramma);
-for(int i=1; i<=numeroEventi; i++)
+Console.WriteLine("Vuoi importare un file precedentemente esportato? (si/no)");
+string importa = Console.ReadLine();
+if (importa == "si")
+    programma.eventi = GestioneFile.NuovaImportazione();
+else
 {
-    Console.WriteLine();
-    string tipo = SceltaEventoConferenza();
-    if (tipo == "evento")
-        CreaEvento(i);
-    else
-        CreaConferenza(i);
+    int numeroEventi = NumeroUtente("inserisci il numero di eventi da inserire:");
+    for (int i = 1; i <= numeroEventi; i++)
+    {
+        Console.WriteLine();
+        string tipo = SceltaEventoConferenza();
+        if (tipo == "evento")
+            CreaEvento(i);
+        else
+            CreaConferenza(i);
+    }
 }
 bool esci = true;
 do
