@@ -1,5 +1,4 @@
-data;titolo;relatore;prezzo;capienza massima;posti prenotati
-22/11/2022;Evento 22;null;0;23;10
-23/11/2022;Conferenza btc;Mario Rossi;19,99;23;10
-24/11/2022;Evento impatto ambientale;null;0;120;0
-25/11/2022;Conferenza 21;Luigi Verdi;29,99;100;0
+titolo;data;relatore;prezzo;capienza massima;posti prenotati
+uno;28/11/2022;null;0;23;15
+due;19/11/2022;Mario;34,00;34;0
+tre;22/11/2022;null;0;32;0
