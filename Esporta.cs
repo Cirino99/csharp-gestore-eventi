@@ -1,44 +1,51 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using System.IO;
-using System.Text;
-
 public static class GestioneFile
 {
     public static void NuovaEsportazione(List<Evento> eventi)
     {
         string path = "C:\\Users\\Simone\\Documents\\Boolean\\Experis\\csharp-gestore-eventi\\programmaEventi.csv";
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+        StreamWriter file = File.CreateText(path);
         try
         {
-            if (File.Exists(path))
-            {
-                File.Delete(path);
-            }
-            StreamWriter file = File.CreateText(path);
-            file.WriteLine("data,titolo,relatore,prezzo,capienza massima,posti prenotati");
+            file.WriteLine("data;titolo;relatore;prezzo;capienza massima;posti prenotati");
             foreach(Evento evento in eventi)
             {
                 string riga = evento.ToString();
                 riga = riga.Replace('-', ';');
+                int spazio = riga.IndexOf(";");
+                while (spazio != -1)
+                {
+                    riga = riga.Remove(spazio - 1,1);
+                    riga = riga.Remove(spazio,1);
+                    spazio = riga.IndexOf(";",spazio);
+                }
                 if (evento.GetType().ToString() == "Evento")
                     riga += ";null;0";
                 riga += ";" + evento.CapienzaMassima + ";" + evento.PostiPrenotati;
                 file.WriteLine(riga);
             }
-            file.Close();
         }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            file.Close();
         }
     }
     public static List<Evento> NuovaImportazione()
     {
         List<Evento> eventi = new List<Evento>();
         string path = "C:\\Users\\Simone\\Documents\\Boolean\\Experis\\csharp-gestore-eventi\\programmaEventi.csv";
+        StreamReader file = File.OpenText(path);
         try
         {
-            StreamReader file = File.OpenText(path);
             file.ReadLine();
             while (!file.EndOfStream)
             {
@@ -81,6 +88,7 @@ public static class GestioneFile
         {
             Console.WriteLine(e.Message);
         }
+        file.Close();
         return eventi;
     }
 }
