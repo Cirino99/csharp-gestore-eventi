@@ -61,7 +61,7 @@ do
             EliminaPrenotazione(evento2);
             break;
         case "6":
-            Esporta.NuovaEsportazione(programma.eventi);
+            GestioneFile.NuovaEsportazione(programma.eventi);
             break;
         default:
             programma.PulisciListaEventi();
