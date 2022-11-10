@@ -67,4 +67,8 @@ public class Evento
     {
         return Data + " - " + Titolo;
     }
+    public virtual string ToCsv()
+    {
+        return Titolo + ";" + Data;
+    }
 }

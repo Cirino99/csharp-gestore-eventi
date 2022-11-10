@@ -12,18 +12,10 @@ public static class GestioneFile
         StreamWriter file = File.CreateText(path);
         try
         {
-            file.WriteLine("data;titolo;relatore;prezzo;capienza massima;posti prenotati");
+            file.WriteLine("titolo;data;relatore;prezzo;capienza massima;posti prenotati");
             foreach(Evento evento in eventi)
             {
-                string riga = evento.ToString();
-                riga = riga.Replace('-', ';');
-                int spazio = riga.IndexOf(";");
-                while (spazio != -1)
-                {
-                    riga = riga.Remove(spazio - 1,1);
-                    riga = riga.Remove(spazio,1);
-                    spazio = riga.IndexOf(";",spazio);
-                }
+                string riga = evento.ToCsv();
                 if (evento.GetType().ToString() == "Evento")
                     riga += ";null;0";
                 riga += ";" + evento.CapienzaMassima + ";" + evento.PostiPrenotati;
@@ -57,8 +49,8 @@ public static class GestioneFile
                     {
                         if (info[2] == "null")
                         {
-                            string titolo = info[1];
-                            DateOnly data = DateOnly.Parse(info[0]);
+                            string titolo = info[0];
+                            DateOnly data = DateOnly.Parse(info[1]);
                             int capienzaMassima = Convert.ToInt32(info[4]);
                             int postiPrenotati = Convert.ToInt32(info[5]);
                             Evento evento = new Evento(titolo,data,capienzaMassima);
@@ -66,8 +58,8 @@ public static class GestioneFile
                             eventi.Add(evento);
                         } else
                         {
-                            string titolo = info[1];
-                            DateOnly data = DateOnly.Parse(info[0]);
+                            string titolo = info[0];
+                            DateOnly data = DateOnly.Parse(info[1]);
                             string relatore = info[2];
                             double prezzo = Convert.ToDouble(info[3]);
                             int capienzaMassima = Convert.ToInt32(info[4]);
