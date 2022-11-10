@@ -22,7 +22,8 @@ do
     Console.WriteLine("3) Stampa eventi in una data specifica");
     Console.WriteLine("4) Aggiungi prenotazione ad un evento");
     Console.WriteLine("5) Elimina prenotazione ad un evento");
-    Console.WriteLine("6) Eliminate tutti gli eventi ed esci");
+    Console.WriteLine("6) Salva il programma in un file esterno");
+    Console.WriteLine("7) Eliminate tutti gli eventi ed esci");
     string scelta = Console.ReadLine();
     switch (scelta)
     {
@@ -58,6 +59,9 @@ do
             DateOnly data3 = DataUtente("Inserisci la data dell'evento (gg/mm/yyyy)");
             Evento evento2 = programma.CercaEvento(nomeEvento2, data3);
             EliminaPrenotazione(evento2);
+            break;
+        case "6":
+            Esporta.NuovaEsportazione(programma.eventi);
             break;
         default:
             programma.PulisciListaEventi();

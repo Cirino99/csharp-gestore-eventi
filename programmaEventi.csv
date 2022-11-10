@@ -1,0 +1,5 @@
+data,titolo,relatore,prezzo,capienza massima,posti prenotati
+11/11/2022 , uno,null,0,59,23
+11/11/2022 , due , mario , 20.19,30,0
+12/11/2022 , tre,null,0,20,12
+12/11/2022 , quattro , Luigi , 19.99,30,0

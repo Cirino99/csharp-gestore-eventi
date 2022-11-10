@@ -16,7 +16,7 @@ public class ProgrammaEventi
             _titolo = value;
         }
     }
-    List<Evento> eventi;
+    public List<Evento> eventi;
     public ProgrammaEventi(string titolo)
     {
         Titolo = titolo;

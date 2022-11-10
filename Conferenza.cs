@@ -37,6 +37,6 @@ public class Conferenza : Evento
     }
     public override string ToString()
     {
-        return Data + " - " + Titolo + " - " + Relatore + " - " + Prezzo.ToString("0.00") + " euro";
+        return Data + " - " + Titolo + " - " + Relatore + " - " + Prezzo.ToString("0.00");
     }
 }
