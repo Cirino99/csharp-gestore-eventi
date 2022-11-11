@@ -51,7 +51,9 @@ public class Evento
     }
     public void PrenotaPosti(int numero)
     {
-        if(CapienzaMassima < PostiPrenotati + numero)
+        if (Data < DateOnly.FromDateTime(DateTime.Now))
+            throw new GestoreEventiException("Non puoi prenotare posti di un evento già passato");
+        if (CapienzaMassima < PostiPrenotati + numero)
             throw new GestoreEventiException("Non ci sono abbastanza posti disponibili");
         PostiPrenotati += numero;
     }
